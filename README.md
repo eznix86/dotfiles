@@ -3,7 +3,7 @@
 - Fork and install:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/theArtechnology/dotfiles/main/install.sh | bash -s
+curl -sSL -H "Cache-Control: no-cache" https://raw.githubusercontent.com/theArtechnology/dotfiles/main/install.sh | bash -s
 ```
 
 - Update the backup.yaml
