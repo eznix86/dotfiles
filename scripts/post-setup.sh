@@ -3,6 +3,17 @@
 # NOT REQUIRED BUT NEEDED LATER
 ####
 
+while ! [[ "$post_setup" =~ ^(y|Y|n|N)$ ]]; do
+    printf "Do you want to continue to post-setup (optional)? (y/n): " 
+    read post_setup
+done
+
+
+if [[ $post_setup =~ ^(n|N)$  ]]; then
+    exit 1
+fi
+
+
 # install docker
 curl -sSL https://get.docker.com  | sudo bash -s
 
