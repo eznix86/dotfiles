@@ -6,7 +6,7 @@ base_home: &home
 wallpapers:
   <<: *home
   files:
-    - ./Pictures/wallpapers
+    - Pictures/wallpapers
 
 shell:
   <<: *home
@@ -14,7 +14,7 @@ shell:
     - .zshrc
     - .bashrc
 
-i3:
+i3_config:
   <<: *home
   files:
     - .config/i3
