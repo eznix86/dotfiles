@@ -25,13 +25,20 @@ function restore() {
     group=$3
 
     original_file=$(echo $target_directory/$file)
-    backup_file=$(echo $BACKUP_DIRECTORY/$group/$file)
-    if [ -d $backup_file ]; then
-        mkdir -p $original_file
+    namespace=$(echo $BACKUP_DIRECTORY/$group)
+    backup_location=$(echo $namespace/$file)
+
+    echo $original_file
+    echo $namespace
+    echo $backup_location
+    echo $(dirname $original_file)
+
+    if [[ -d $backup_location ]]; then
+        cp -r $backup_location $(dirname $original_file)
+    elif [[ -f $backup_location ]]; then
+        cp -r $backup_location $original_file
     fi
-
-    cp -r $backup_file $original_file
-
+    
     printf "file '%s' OK\n" $original_file;
 
 }
