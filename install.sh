@@ -8,8 +8,6 @@ DIRECTORY="$HOME/.dotfiles"
 
 mkdir -p $DIRECTORY
 
-curl -sSL https://raw.githubusercontent.com/theArtechnology/dotfiles/main/install.sh | bash -s
-
 git clone git@github.com:theArtechnology/dotfiles.git $DIRECTORY
 
 app_dir="$HOME/.dotfiles"
