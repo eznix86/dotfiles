@@ -1,13 +1,16 @@
 #!/bin/bash
 
 ##############
-# curl -sSL url/to/install.sh | bash -s
+# Setup personal dotfiles
 ##############
 
-# TODO: clone repository to .dotfiles in home
-# TODO: run setup.sh
-# TODO: run restore or backup
-# TODO: run post-setup.sh
+DIRECTORY="$HOME/.dotfiles"
+
+mkdir -p $DIRECTORY
+
+curl -sSL https://raw.githubusercontent.com/theArtechnology/dotfiles/main/install.sh | bash -s
+
+git clone git@github.com:theArtechnology/dotfiles.git $DIRECTORY
 
 app_dir="$HOME/.dotfiles"
 script_dir="$app_dir/scripts"
