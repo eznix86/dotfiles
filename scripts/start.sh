@@ -22,14 +22,14 @@ MODE="N";
 function restore() {
     target_directory=$1
     file=$2
-    group=$3
+    namespace=$3
 
     original_file=$(echo $target_directory/$file)
-    namespace=$(echo $BACKUP_DIRECTORY/$group)
-    backup_location=$(echo $namespace/$file)
+    backup_namespace=$(echo $BACKUP_DIRECTORY/$namespace)
+    backup_location=$(echo $backup_namespace/$file)
 
     echo $original_file
-    echo $namespace
+    echo $backup_namespace
     echo $backup_location
     echo $(dirname $original_file)
 
@@ -46,33 +46,47 @@ function restore() {
 function backup() {
     target_directory=$1
     file=$2
-    group=$3
+    namespace=$3
 
     original_file=$(echo $target_directory/$file)
-    namespace=$(echo $BACKUP_DIRECTORY/$group)
-    backup_location=$(echo $namespace/$file)
+    backup_namespace=$(echo $BACKUP_DIRECTORY/$namespace)
+    backup_location=$(echo $backup_namespace/$file)
     mkdir -p $(dirname $backup_location)
     cp -r $original_file $backup_location
     printf "file '%s' OK\n" $original_file;
 
 }
 
-function find_files_in_group() {
+function find_files_in_namespace() {
 
-    group_directory=$1
-    group_name=$2
+    namespace_directory=$1
+    namespace_name=$2
 
 
-    target_directory=$(echo $group_directory | jq -r ".value.target")
-    for file in `echo $group_directory | jq -r ".value.files[]"`
+    target_directory=$(echo $namespace_directory | jq -r ".value.target")
+    files_list=$(echo $namespace_directory | jq -r ".value?.files")
+
+    if [[ "null" == "$files_list" ]]; then
+        case $MODE in
+        'R')
+            restore $target_directory "." $namespace_name
+            ;;
+        'B')
+            backup $target_directory "." $namespace_name
+            ;;
+        esac
+        return 1        
+    fi
+
+    for file in `echo $files_list | jq -r ".[]"`
     do
 
         case $MODE in
         'R')
-            restore $target_directory $file $group_name
+            restore $target_directory $file $namespace_name
             ;;
         'B')
-            backup $target_directory $file $group_name
+            backup $target_directory $file $namespace_name
             ;;
         esac
     done
@@ -93,10 +107,10 @@ function prompt() {
 }
 
 
-function find_group() {
-    for group_directory in `echo $BACKUP_JSON | jq -c ". | to_entries |.[]"`
+function find_namespace() {
+    for namespace_directory in `echo $BACKUP_JSON | jq -c ". | to_entries |.[]"`
     do
-        key=$(echo $group_directory | jq -r ".key")
+        key=$(echo $namespace_directory | jq -r ".key")
 
         case $MODE in
             'R')
@@ -107,7 +121,7 @@ function find_group() {
                 ;;
         esac
 
-        find_files_in_group $group_directory $key
+        find_files_in_namespace $namespace_directory $key
     done
 }
 
@@ -125,5 +139,5 @@ if [[ "$MODE" =~ ^(B)$ ]]; then
 fi
 
 
-find_group
+find_namespace
 
