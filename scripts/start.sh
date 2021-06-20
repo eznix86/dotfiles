@@ -12,8 +12,14 @@ BACKUP_JSON="$(yq eval 'del(.base*)' -j $DIRECTORY/backup.yaml)"
 
 # MODE R for restore
 # MODE B for backup
+
 MODE="N";
 
+if [[ $1 =~ ^(-r)$ ]]; then
+    MODE="R"
+elif [[ $1 =~ ^(-b)$ ]]; then
+    MODE="B"
+fi
 
 ###################
 # BACKUP-RESTORE SYSTEM
@@ -130,7 +136,10 @@ function find_namespace() {
 
 ### run here
 
-prompt $USER
+if [[ "$MODE" =~ ^(N)$ ]]; then
+    prompt $USER
+fi
+
 
 if [[ "$MODE" =~ ^(N)$ ]]; then
     printf "\n## No backup/restore performed ##\n"
