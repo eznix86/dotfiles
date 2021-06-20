@@ -3,8 +3,8 @@
 # Schema is always
 # namespace_name:
 #   target: string - targeted to be backup and restored 
-#   files: array - specify folders and file relative
-#                  to its target
+#   files: array (optional) - can specify folders and 
+#                  file relative to its target
 # where files are relative to target
 # #######################################################
 
