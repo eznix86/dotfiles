@@ -22,10 +22,10 @@ MODE="N";
 function restore() {
     target_directory=$1
     file=$2
+    group=$3
 
     original_file=$(echo $target_directory/$file)
-    backup_file=$(echo $BACKUP_DIRECTORY/$file)
-    echo "$backup_file"
+    backup_file=$(echo $BACKUP_DIRECTORY/$group/$file)
     if [ -d $backup_file ]; then
         mkdir -p $original_file
     fi
@@ -39,13 +39,13 @@ function restore() {
 function backup() {
     target_directory=$1
     file=$2
+    group=$3
 
     original_file=$(echo $target_directory/$file)
-    backup_file=$(echo $BACKUP_DIRECTORY/$file)
-    if [ -d $original_file ]; then
-        mkdir -p $backup_file
-    fi
-    cp -r $original_file $backup_file
+    namespace=$(echo $BACKUP_DIRECTORY/$group)
+    backup_location=$(echo $namespace/$file)
+    mkdir -p $(dirname $backup_location)
+    cp -r $original_file $backup_location
     printf "file '%s' OK\n" $original_file;
 
 }
@@ -53,6 +53,8 @@ function backup() {
 function find_files_in_group() {
 
     group_directory=$1
+    group_name=$2
+
 
     target_directory=$(echo $group_directory | jq -r ".value.target")
     for file in `echo $group_directory | jq -r ".value.files[]"`
@@ -60,10 +62,10 @@ function find_files_in_group() {
 
         case $MODE in
         'R')
-            restore $target_directory $file
+            restore $target_directory $file $group_name
             ;;
         'B')
-            backup $target_directory $file
+            backup $target_directory $file $group_name
             ;;
         esac
     done
@@ -98,7 +100,7 @@ function find_group() {
                 ;;
         esac
 
-        find_files_in_group $group_directory
+        find_files_in_group $group_directory $key
     done
 }
 
@@ -110,6 +112,11 @@ if [[ "$MODE" =~ ^(N)$ ]]; then
     printf "\n## No backup/restore performed ##\n"
     exit 1
 fi
+
+if [[ "$MODE" =~ ^(B)$ ]]; then
+    rm -rf $BACKUP_DIRECTORY
+fi
+
 
 find_group
 
