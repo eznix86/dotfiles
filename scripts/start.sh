@@ -12,7 +12,7 @@ BACKUP_JSON="$(yq eval 'del(.base*)' -j $DIRECTORY/backup.yaml)"
 
 # MODE R for restore
 # MODE B for backup
-MODE="n";
+MODE="N";
 
 
 ###################
