@@ -19,5 +19,3 @@ chmod +x "$script_dir/start.sh"
 chmod +x "$script_dir/post-setup.sh"
 
 $script_dir/setup.sh
-$script_dir/start.sh
-$script_dir/post-setup.sh
