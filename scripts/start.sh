@@ -101,13 +101,15 @@ function find_files_in_namespace() {
 function prompt() {
     printf "Hi %s, \n" $1
 
-    printf "Do you want to restore or backup [nothing] ? (r/b/n): " 
-    read action
-
-    while ! [[ "$action" =~ ^(r|R|b|B|n|N)$ ]]; do
+    while true; do
         printf "Do you want to restore or backup [nothing] ? (r/b/n): " 
         read action
+
+        if [[ "$action" =~ ^(r|R|b|B|n|N)$ ]]; then
+            break
+        fi
     done
+    
 
     MODE=${action^^}
 

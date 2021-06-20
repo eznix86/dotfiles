@@ -3,9 +3,12 @@
 # NOT REQUIRED BUT NEEDED LATER
 ####
 
-while ! [[ "$post_setup" =~ ^(y|Y|n|N)$ ]]; do
+while true; do
     printf "Do you want to continue to post-setup (optional)? (y/n): " 
     read post_setup
+    if [[ "$post_setup" =~ ^(y|Y|n|N)$ ]]; then
+        break
+    fi
 done
 
 
