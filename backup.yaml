@@ -1,4 +1,12 @@
-# All items containing starting with base, are ignored
+#########################################################
+# All items containing starting with *base*, are ignored
+# Schema is always
+# namespace_name:
+#   target: string - targeted to be backup and restored 
+#   files: array - specify folders and file relative
+#                  to its target
+# where files are relative to target
+# #######################################################
 
 base_home: &home
   target: /home/bruno
