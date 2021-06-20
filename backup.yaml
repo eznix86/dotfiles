@@ -1,0 +1,21 @@
+# All items containing starting with base, are ignored
+
+base_home: &home
+  target: /home/bruno
+
+wallpapers:
+  <<: *home
+  files:
+    - ./Pictures/wallpapers
+
+shell:
+  <<: *home
+  files:
+    - .zshrc
+    - .bashrc
+
+i3:
+  <<: *home
+  files:
+    - .config/i3
+    
