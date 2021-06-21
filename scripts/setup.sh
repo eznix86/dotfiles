@@ -28,7 +28,8 @@ function install() {
 
 # ask for password
 sudo -p "Please enter your admin password: " date 2>/dev/null 1>&2
-
+# Add and update deps
+sudo add-apt-repository ppa:mmstick76/alacritty
 sudo apt update -yq
 
 # install custom items
@@ -44,7 +45,7 @@ sudo apt update -yq
 # zsh
 # yq for yaml
 # batcat https://github.com/sharkdp/bat alias bat
-commands=(rofi xsel flameshot compton viewnior hsetroot make jq i3 i3blocks neovim zsh yq bat)
+commands=(rofi xsel flameshot compton viewnior hsetroot make jq i3 i3blocks neovim zsh yq bat alacritty)
 printf "\n"
 for c in ${commands[@]}
 do
