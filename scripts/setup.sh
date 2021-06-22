@@ -45,7 +45,7 @@ sudo apt update -yq
 # zsh
 # yq for yaml
 # batcat https://github.com/sharkdp/bat alias bat
-commands=(rofi xsel flameshot compton viewnior hsetroot make jq i3 i3blocks neovim zsh yq bat alacritty i3lock-fancy)
+commands=(rofi xsel flameshot compton viewnior hsetroot make jq i3 i3blocks neovim zsh yq bat alacritty i3lock-fancy picom)
 printf "\n"
 for c in ${commands[@]}
 do
