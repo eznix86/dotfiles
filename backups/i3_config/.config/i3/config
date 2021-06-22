@@ -198,9 +198,8 @@ exec --no-startup-id "xmodmap ~/.Xmodmap"
 # swap capslock with escape
 exec --no-startup-id "/usr/bin/setxkbmap -option 'caps:swapescape'"
 # added picom 
-exec --no-startup-id "picom --config ~/.config/picom/config --experimental-backends"
+exec --no-startup-id "picom --config ~/.config/picom/config --experimental-backends -b"
 
 # Custom binding
 bindsym $mod+q exec i3lock-fancy -p -g
 bindsym $mod+d exec rofi -combi-modi window#drun -show combi -modi combi -show-icons
-210
