@@ -26,4 +26,7 @@ i3_config:
   <<: *home
   files:
     - .config/i3
-    
+i3blocks:
+  <<: *home
+  files:
+    - .config/i3blocks

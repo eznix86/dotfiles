@@ -1,0 +1,52 @@
+full_text=〉
+align=center
+separator=false
+separator_block_width=7
+
+
+[cpu]
+command=echo "$(mpstat 1 1 | awk '/Average:/ {printf("CPU: %s\n", $(NF-9))}')%"
+interval=5
+
+[separator]
+
+[swap]
+command=free -mwh --si | grep Swap |  awk '{ print "SWAP: " $3"/"$2 }'
+interval=5
+
+
+[memory]
+command=free -mwh --si | grep Mem |  awk '{ print "MEM: " $3"/"$2 }'
+interval=5
+
+[separator]
+
+# Guess the weather hourly
+[weather]
+command=curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo
+interval=3600
+color=#A4C2F4
+
+[separator]
+
+# Query my default IP address only on startup
+[ip]
+command=hostname -I | awk '{ print "IP:" $1 }'
+interval=once
+color=#91E78B
+
+[separator]
+
+[publicip]
+full_text=Get Public IP
+command=echo "Public IP: $(curl ifconfig.me || { echo "Ethernet not connected"; exit 33;})"
+color=#88FFFF
+
+[separator]
+
+# Update time every 5 seconds
+[time]
+command=date +"%m-%d-%y %T"
+interval=60
+
+[separator]
