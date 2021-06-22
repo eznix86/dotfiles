@@ -1,4 +1,5 @@
 # Window borders classes
+# colors with: https://coolors.co/palettes/trending
 # class                 border  bground text    indicator child_border
 client.focused          #7494fb #7494fb #0d1010 #7494fb   #7494fb
 client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
@@ -16,6 +17,11 @@ set $mod Mod4
 # is used in the bar {} block below.
 # see command: fc-list : family spacing | sort | uniq | grep <name>
 # font pango:[family list] [style options] [size]
+# https://fonts.google.com/specimen/Oxygen+Mono
+# https://sourcefoundry.org/hack/
+# https://typeof.net/Iosevka/
+# copy to ~/.fonts/<name>
+# reload cache with command: fc-cache -f -v
 font pango:Roboto Medium 9
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
@@ -194,7 +200,7 @@ bar {
 
 # Enable gaps
 for_window [class=".*"] border pixel 1
-gaps inner 25
+gaps inner 20
 gaps outer 0
 smart_borders on
 smart_borders no_gaps
@@ -212,3 +218,5 @@ exec --no-startup-id "picom --config ~/.config/picom/config --experimental-backe
 # Custom binding
 bindsym $mod+q exec i3lock-fancy -p -g
 bindsym $mod+d exec rofi -combi-modi window#drun -show combi -modi combi -show-icons
+
+focus_follows_mouse no
