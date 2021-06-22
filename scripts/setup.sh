@@ -8,7 +8,9 @@ function install_yq () {
 }
 
 function install_picom () {
+	# https://www.linuxfordevices.com/tutorials/linux/picom
 	sudo apt install -qqqy cmake meson git pkg-config asciidoc libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libxcb-glx0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev  libpcre2-dev  libevdev-dev uthash-dev libev-dev libx11-xcb-dev
+	cd /tmp
 	git clone https://github.com/jonaburg/picom
 	cd picom
 	git submodule update --init --recursive
@@ -17,6 +19,27 @@ function install_picom () {
 	sudo ninja -C build install
 	cd ..
 	rm picom -rf
+}
+
+
+function install_i3_gaps () {
+	# mixing https://gist.github.com/chewwt/cbdb71b92b9a45e3ac9314e64c58cbf4
+	# and https://gist.github.com/boreycutts/6417980039760d9d9dac0dd2148d4783
+    sudo add-apt-repository -y ppa:regolith-linux/stable
+    sudo apt install i3-gaps
+
+	cd /tmp
+	sudo apt install -y libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf libxcb-xrm0 libxcb-xrm-dev automake libxcb-shape0-dev libxcb-xrm-dev
+
+	# clone the repository
+	git clone https://www.github.com/Airblader/i3 i3-gaps
+	cd i3-gaps
+
+	sudo apt install -qqqy meson asciidoc
+	meson -Ddocs=true -Dmans=true ../build
+	meson compile -C ../build
+	sudo meson install -C ../build
+
 }
 
 function apt_install () {
@@ -32,6 +55,11 @@ function install() {
 		fi
 		if [[ "$1" == "picom" ]]; then
 			install_picom
+			return 1
+		fi
+		
+		if [[ "$1" == "i3-gaps" ]]; then
+			install_i3_gaps
 			return 1
 		fi
 
@@ -61,7 +89,7 @@ sudo apt update -yq
 # zsh
 # yq for yaml
 # batcat https://github.com/sharkdp/bat alias bat
-commands=(rofi xsel flameshot compton viewnior hsetroot make jq i3 i3blocks neovim zsh yq bat alacritty i3lock-fancy picom)
+commands=(rofi xsel flameshot compton viewnior hsetroot make jq i3 i3blocks neovim zsh yq bat alacritty i3lock-fancy picom i3-gaps)
 printf "\n"
 for c in ${commands[@]}
 do
