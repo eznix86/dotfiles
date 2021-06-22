@@ -217,6 +217,6 @@ exec --no-startup-id "picom --config ~/.config/picom/config --experimental-backe
 
 # Custom binding
 bindsym $mod+q exec i3lock-fancy -p -g
-bindsym $mod+d exec rofi -combi-modi window#drun -show combi -modi combi -show-icons
+bindsym $mod+d exec rofi -theme /home/bruno/.config/rofi/theme.rasi -combi-modi window#drun -show combi -modi combi -show-icons
 
 focus_follows_mouse no
